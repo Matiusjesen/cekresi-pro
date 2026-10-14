@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0755d9">
+<title>CEKRESI PRO</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f1f5f9;color:#172033}
+header{background:#0755d9;color:#fff;padding:25px 18px;text-align:center}
+header h1{margin:0;font-size:28px}
+header p{margin-bottom:0;font-size:14px}
+.container{max-width:500px;margin:25px auto;padding:0 15px}
+.card{background:#fff;padding:22px;border-radius:16px;box-shadow:0 4px 15px #0000000d}
+h2{margin-top:0;font-size:21px}
+label{display:block;margin-top:18px;margin-bottom:8px;font-weight:bold;font-size:14px}
+input,select{width:100%;padding:14px;border:1px solid #cbd5e1;border-radius:9px;font-size:16px;background:#fff}
+button{width:100%;padding:15px;margin-top:20px;border:none;border-radius:9px;background:#0755d9;color:#fff;font-size:16px;font-weight:bold;cursor:pointer}
+button:active{opacity:.8}
+.info{text-align:center;margin-top:20px;color:#64748b;font-size:13px;line-height:1.5}
+#hasil{display:none;margin-top:20px;padding:15px;background:#eff6ff;border-radius:10px;line-height:1.7;overflow-wrap:anywhere}
+footer{text-align:center;padding:25px 15px;color:#64748b;font-size:12px}
+</style>
+</head>
+<body>
+<header>
+  <h1>📦 CEKRESI PRO</h1>
+  <p>Lacak paket dengan mudah dalam satu tempat</p>
+</header>
+<main class="container">
+  <section class="card">
+    <h2>🔎 Lacak Paketmu</h2>
+    <p>Masukkan nomor resi dan pilih ekspedisi untuk memulai pelacakan.</p>
+    <form id="formResi">
+      <label for="resi">Nomor Resi</label>
+      <input type="text" id="resi" placeholder="Masukkan nomor resi..." required autocomplete="off">
+      <label for="ekspedisi">Pilih Ekspedisi</label>
+      <select id="ekspedisi" required>
+        <option value="">-- Pilih Ekspedisi --</option>
+        <option value="jne">JNE</option>
+        <option value="jnt">J&T Express</option>
+        <option value="sicepat">SiCepat</option>
+        <option value="spx">SPX Express</option>
+        <option value="pos">Pos Indonesia</option>
+        <option value="anteraja">AnterAja</option>
+        <option value="ninja">Ninja Xpress</option>
+        <option value="tiki">TIKI</option>
+        <option value="lion">Lion Parcel</option>
+        <option value="ide">ID Express</option>
+      </select>
+      <button type="submit">LACAK PAKET</button>
+    </form>
+    <div id="hasil" aria-live="polite"></div>
+    <div class="info">Versi awal: tampilan dan formulir sudah berfungsi. Untuk mengetahui status paket sungguhan, aplikasi perlu dihubungkan ke API pelacakan.</div>
+  </section>
+</main>
+<footer>CEKRESI PRO &copy; 2026<br>Layanan informasi pelacakan paket</footer>
+<script>
+const form = document.getElementById("formResi");
+const hasil = document.getElementById("hasil");
+form.addEventListener("submit", function(event) {
+  event.preventDefault();
+  const nomorResi = document.getElementById("resi").value.trim();
+  const pilihan = document.getElementById("ekspedisi");
+  const namaEkspedisi = pilihan.options[pilihan.selectedIndex].text;
+  if (!nomorResi || !pilihan.value) {
+    alert("Silakan masukkan nomor resi dan pilih ekspedisi.");
+    return;
+  }
+  hasil.style.display = "block";
+  hasil.replaceChildren();
+  const judul = document.createElement("strong");
+  judul.textContent = "Data Pelacakan";
+  const nomor = document.createElement("p");
+  nomor.textContent = "Nomor resi: " + nomorResi;
+  const ekspedisi = document.createElement("p");
+  ekspedisi.textContent = "Ekspedisi: " + namaEkspedisi;
+  const pesan = document.createElement("p");
+  pesan.textContent = "Pelacakan belum terhubung ke server. Status paket belum dapat diketahui.";
+  hasil.append(judul, nomor, ekspedisi, pesan);
+});
+</script>
+</body>
+</html>
